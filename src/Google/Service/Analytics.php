@@ -1477,6 +1477,26 @@ class Google_Service_Analytics extends Google_Service
                   'type' => 'integer',
                 ),
               ),
+            ),'migrateDataImport' => array(
+              'path' => 'management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/migrateDataImport',
+              'httpMethod' => 'POST',
+              'parameters' => array(
+                'accountId' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+                'webPropertyId' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+                'customDataSourceId' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
             ),'uploadData' => array(
               'path' => 'management/accounts/{accountId}/webproperties/{webPropertyId}/customDataSources/{customDataSourceId}/uploads',
               'httpMethod' => 'POST',
@@ -2850,9 +2870,11 @@ class Google_Service_Analytics_ManagementProfileUserLinks_Resource extends Googl
    * @param string $accountId
    * Account ID which the given view (profile) belongs to.
    * @param string $webPropertyId
-   * Web Property ID which the given view (profile) belongs to.
+   * Web Property ID which the given view (profile) belongs to. Can either be a specific web property
+    * ID or '~all', which refers to all the web properties that user has access to.
    * @param string $profileId
-   * View (Profile) ID to retrieve the profile-user links for
+   * View (Profile) ID to retrieve the profile-user links for. Can either be a specific profile ID or
+    * '~all', which refers to all the profiles that user has access to.
    * @param array $optParams Optional parameters.
    *
    * @opt_param int max-results
@@ -3203,6 +3225,24 @@ class Google_Service_Analytics_ManagementUploads_Resource extends Google_Service
     return $this->call('list', array($params), "Google_Service_Analytics_Uploads");
   }
   /**
+   * Migrate custom data source and data imports to latest version.
+   * (uploads.migrateDataImport)
+   *
+   * @param string $accountId
+   * Account Id for migration.
+   * @param string $webPropertyId
+   * Web property Id for migration.
+   * @param string $customDataSourceId
+   * Custom data source Id for migration.
+   * @param array $optParams Optional parameters.
+   */
+  public function migrateDataImport($accountId, $webPropertyId, $customDataSourceId, $optParams = array())
+  {
+    $params = array('accountId' => $accountId, 'webPropertyId' => $webPropertyId, 'customDataSourceId' => $customDataSourceId);
+    $params = array_merge($params, $optParams);
+    return $this->call('migrateDataImport', array($params));
+  }
+  /**
    * Upload data for a custom data source. (uploads.uploadData)
    *
    * @param string $accountId
@@ -3503,7 +3543,8 @@ class Google_Service_Analytics_ManagementWebpropertyUserLinks_Resource extends G
    * @param string $accountId
    * Account ID which the given web property belongs to.
    * @param string $webPropertyId
-   * Web Property ID for the webProperty-user links to retrieve.
+   * Web Property ID for the webProperty-user links to retrieve. Can either be a specific web
+    * property ID or '~all', which refers to all the web properties that user has access to.
    * @param array $optParams Optional parameters.
    *
    * @opt_param int max-results
@@ -4190,6 +4231,11 @@ class Google_Service_Analytics_Column extends Google_Model
   }
 }
 
+class Google_Service_Analytics_ColumnAttributes extends Google_Model
+{
+
+}
+
 class Google_Service_Analytics_Columns extends Google_Collection
 {
   public $attributeNames;
@@ -4258,6 +4304,7 @@ class Google_Service_Analytics_CustomDataSource extends Google_Collection
   public $created;
   public $description;
   public $id;
+  public $importBehavior;
   public $kind;
   public $name;
   protected $parentLinkType = 'Google_Service_Analytics_CustomDataSourceParentLink';
@@ -4266,6 +4313,7 @@ class Google_Service_Analytics_CustomDataSource extends Google_Collection
   public $selfLink;
   public $type;
   public $updated;
+  public $uploadType;
   public $webPropertyId;
 
   public function setAccountId($accountId)
@@ -4316,6 +4364,16 @@ class Google_Service_Analytics_CustomDataSource extends Google_Collection
   public function getId()
   {
     return $this->id;
+  }
+
+  public function setImportBehavior($importBehavior)
+  {
+    $this->importBehavior = $importBehavior;
+  }
+
+  public function getImportBehavior()
+  {
+    return $this->importBehavior;
   }
 
   public function setKind($kind)
@@ -4386,6 +4444,16 @@ class Google_Service_Analytics_CustomDataSource extends Google_Collection
   public function getUpdated()
   {
     return $this->updated;
+  }
+
+  public function setUploadType($uploadType)
+  {
+    $this->uploadType = $uploadType;
+  }
+
+  public function getUploadType()
+  {
+    return $this->uploadType;
   }
 
   public function setWebPropertyId($webPropertyId)
@@ -6908,6 +6976,11 @@ class Google_Service_Analytics_GaDataQuery extends Google_Collection
   }
 }
 
+class Google_Service_Analytics_GaDataTotalsForAllResults extends Google_Model
+{
+
+}
+
 class Google_Service_Analytics_Goal extends Google_Model
 {
   public $accountId;
@@ -7927,6 +8000,11 @@ class Google_Service_Analytics_McfDataRowsConversionPathValue extends Google_Mod
   }
 }
 
+class Google_Service_Analytics_McfDataTotalsForAllResults extends Google_Model
+{
+
+}
+
 class Google_Service_Analytics_Profile extends Google_Model
 {
   public $accountId;
@@ -8922,6 +9000,11 @@ class Google_Service_Analytics_RealtimeDataQuery extends Google_Collection
   {
     return $this->sort;
   }
+}
+
+class Google_Service_Analytics_RealtimeDataTotalsForAllResults extends Google_Model
+{
+
 }
 
 class Google_Service_Analytics_Segment extends Google_Model

@@ -528,6 +528,10 @@ class Google_Service_Drive extends Google_Service
                   'location' => 'query',
                   'type' => 'string',
                 ),
+                'corpus' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
                 'projection' => array(
                   'location' => 'query',
                   'type' => 'string',
@@ -1762,6 +1766,8 @@ class Google_Service_Drive_Files_Resource extends Google_Service_Resource
    * Query string for searching files.
    * @opt_param string pageToken
    * Page token for files.
+   * @opt_param string corpus
+   * The body of items (files/documents) to which the query applies.
    * @opt_param string projection
    * This parameter is deprecated and has no function.
    * @opt_param int maxResults
@@ -2553,6 +2559,7 @@ class Google_Service_Drive_About extends Google_Collection
   public $quotaBytesUsed;
   public $quotaBytesUsedAggregate;
   public $quotaBytesUsedInTrash;
+  public $quotaType;
   public $remainingChangeIds;
   public $rootFolderId;
   public $selfLink;
@@ -2737,6 +2744,16 @@ class Google_Service_Drive_About extends Google_Collection
   public function getQuotaBytesUsedInTrash()
   {
     return $this->quotaBytesUsedInTrash;
+  }
+
+  public function setQuotaType($quotaType)
+  {
+    $this->quotaType = $quotaType;
+  }
+
+  public function getQuotaType()
+  {
+    return $this->quotaType;
   }
 
   public function setRemainingChangeIds($remainingChangeIds)
@@ -3605,6 +3622,11 @@ class Google_Service_Drive_Channel extends Google_Model
   {
     return $this->type;
   }
+}
+
+class Google_Service_Drive_ChannelParams extends Google_Model
+{
+
 }
 
 class Google_Service_Drive_ChildList extends Google_Collection
@@ -4702,6 +4724,11 @@ class Google_Service_Drive_DriveFile extends Google_Collection
   }
 }
 
+class Google_Service_Drive_DriveFileExportLinks extends Google_Model
+{
+
+}
+
 class Google_Service_Drive_DriveFileImageMediaMetadata extends Google_Model
 {
   public $aperture;
@@ -5047,6 +5074,11 @@ class Google_Service_Drive_DriveFileLabels extends Google_Model
   {
     return $this->viewed;
   }
+}
+
+class Google_Service_Drive_DriveFileOpenWithLinks extends Google_Model
+{
+
 }
 
 class Google_Service_Drive_DriveFileThumbnail extends Google_Model
@@ -5807,6 +5839,11 @@ class Google_Service_Drive_Revision extends Google_Model
   {
     return $this->selfLink;
   }
+}
+
+class Google_Service_Drive_RevisionExportLinks extends Google_Model
+{
+
 }
 
 class Google_Service_Drive_RevisionList extends Google_Collection

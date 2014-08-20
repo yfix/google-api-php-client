@@ -33,7 +33,7 @@ class Google_Service_Bigquery extends Google_Service
 {
   /** View and manage your data in Google BigQuery. */
   const BIGQUERY = "https://www.googleapis.com/auth/bigquery";
-  /** New Service. */
+  /** Insert data into Google BigQuery. */
   const BIGQUERY_INSERTDATA = "https://www.googleapis.com/auth/bigquery.insertdata";
   /** View and manage your data across Google Cloud Platform services. */
   const CLOUD_PLATFORM = "https://www.googleapis.com/auth/cloud-platform";
@@ -777,7 +777,8 @@ class Google_Service_Bigquery_Tabledata_Resource extends Google_Service_Resource
 {
 
   /**
-   * Inserts the supplied rows into the table. (tabledata.insertAll)
+   * Streams data into BigQuery one record at a time without needing to run a load
+   * job. (tabledata.insertAll)
    *
    * @param string $projectId
    * Project ID of the destination table.
@@ -2010,13 +2011,15 @@ class Google_Service_Bigquery_JobConfigurationQuery extends Google_Model
   }
 }
 
-class Google_Service_Bigquery_JobConfigurationTableCopy extends Google_Model
+class Google_Service_Bigquery_JobConfigurationTableCopy extends Google_Collection
 {
   public $createDisposition;
   protected $destinationTableType = 'Google_Service_Bigquery_TableReference';
   protected $destinationTableDataType = '';
   protected $sourceTableType = 'Google_Service_Bigquery_TableReference';
   protected $sourceTableDataType = '';
+  protected $sourceTablesType = 'Google_Service_Bigquery_TableReference';
+  protected $sourceTablesDataType = 'array';
   public $writeDisposition;
 
   public function setCreateDisposition($createDisposition)
@@ -2047,6 +2050,16 @@ class Google_Service_Bigquery_JobConfigurationTableCopy extends Google_Model
   public function getSourceTable()
   {
     return $this->sourceTable;
+  }
+
+  public function setSourceTables($sourceTables)
+  {
+    $this->sourceTables = $sourceTables;
+  }
+
+  public function getSourceTables()
+  {
+    return $this->sourceTables;
   }
 
   public function setWriteDisposition($writeDisposition)
@@ -2437,6 +2450,11 @@ class Google_Service_Bigquery_JobStatus extends Google_Collection
   {
     return $this->state;
   }
+}
+
+class Google_Service_Bigquery_JsonObject extends Google_Model
+{
+
 }
 
 class Google_Service_Bigquery_ProjectList extends Google_Collection
