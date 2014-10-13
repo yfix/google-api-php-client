@@ -15,17 +15,7 @@
  * limitations under the License.
  */
 
-require_once 'Google/Auth/AssertionCredentials.php';
-require_once 'Google/Cache/File.php';
-require_once 'Google/Cache/Memcache.php';
-require_once 'Google/Config.php';
-require_once 'Google/Collection.php';
-require_once 'Google/Exception.php';
-require_once 'Google/IO/Curl.php';
-require_once 'Google/IO/Stream.php';
-require_once 'Google/Model.php';
-require_once 'Google/Service.php';
-require_once 'Google/Service/Resource.php';
+require_once realpath(dirname(__FILE__) . '/../../autoload.php');
 
 /**
  * The Google API Client
@@ -36,7 +26,7 @@ require_once 'Google/Service/Resource.php';
  */
 class Google_Client
 {
-  const LIBVER = "1.0.5-beta";
+  const LIBVER = "1.1.0-beta";
   const USER_AGENT_SUFFIX = "google-api-php-client/";
   /**
    * @var Google_Auth_Abstract $auth
@@ -205,9 +195,9 @@ class Google_Client
 
   /**
    * Set the IO object
-   * @param Google_Io_Abstract $auth
+   * @param Google_IO_Abstract $auth
    */
-  public function setIo(Google_Io_Abstract $io)
+  public function setIo(Google_IO_Abstract $io)
   {
     $this->config->setIoClass(get_class($io));
     $this->io = $io;
@@ -246,6 +236,15 @@ class Google_Client
     // It is arguable whether this check should be here or lower
     // in the library.
     return (null == $token || 'null' == $token || '[]' == $token) ? null : $token;
+  }
+
+  /**
+   * Get the OAuth 2.0 refresh token.
+   * @return string $refreshToken refresh token or null if not available
+   */
+  public function getRefreshToken()
+  {
+    return $this->getAuth()->getRefreshToken();
   }
 
   /**
@@ -356,6 +355,50 @@ class Google_Client
   public function setDeveloperKey($developerKey)
   {
     $this->config->setDeveloperKey($developerKey);
+  }
+
+  /**
+   * Set the hd (hosted domain) parameter streamlines the login process for
+   * Google Apps hosted accounts. By including the domain of the user, you
+   * restrict sign-in to accounts at that domain.
+   * @param $hd string - the domain to use.
+   */
+  public function setHostedDomain($hd)
+  {
+    $this->config->setHostedDomain($hd);
+  }
+
+  /**
+   * Set the prompt hint. Valid values are none, consent and select_account.
+   * If no value is specified and the user has not previously authorized
+   * access, then the user is shown a consent screen.
+   * @param $prompt string
+   */
+  public function setPrompt($prompt)
+  {
+    $this->config->setPrompt($prompt);
+  }
+
+  /**
+   * openid.realm is a parameter from the OpenID 2.0 protocol, not from OAuth
+   * 2.0. It is used in OpenID 2.0 requests to signify the URL-space for which
+   * an authentication request is valid.
+   * @param $realm string - the URL-space to use.
+   */
+  public function setOpenidRealm($realm)
+  {
+    $this->config->setOpenidRealm($realm);
+  }
+
+  /**
+   * If this is provided with the value true, and the authorization request is
+   * granted, the authorization will include any previous authorizations
+   * granted to this user/application combination for other scopes.
+   * @param $include boolean - the URL-space to use.
+   */
+  public function setIncludeGrantedScopes($include)
+  {
+    $this->config->setIncludeGrantedScopes($include);
   }
 
   /**
@@ -486,7 +529,7 @@ class Google_Client
   /**
    * Helper method to execute deferred HTTP requests.
    *
-   * @returns object of the type of the expected class or array.
+   * @return object of the type of the expected class or array.
    */
   public function execute($request)
   {

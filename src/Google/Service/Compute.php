@@ -53,6 +53,7 @@ class Google_Service_Compute extends Google_Service
   public $globalOperations;
   public $httpHealthChecks;
   public $images;
+  public $instanceTemplates;
   public $instances;
   public $licenses;
   public $machineTypes;
@@ -1174,6 +1175,78 @@ class Google_Service_Compute extends Google_Service
               ),
             ),'list' => array(
               'path' => '{project}/global/images',
+              'httpMethod' => 'GET',
+              'parameters' => array(
+                'project' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+                'filter' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+                'pageToken' => array(
+                  'location' => 'query',
+                  'type' => 'string',
+                ),
+                'maxResults' => array(
+                  'location' => 'query',
+                  'type' => 'integer',
+                ),
+              ),
+            ),
+          )
+        )
+    );
+    $this->instanceTemplates = new Google_Service_Compute_InstanceTemplates_Resource(
+        $this,
+        $this->serviceName,
+        'instanceTemplates',
+        array(
+          'methods' => array(
+            'delete' => array(
+              'path' => '{project}/global/instanceTemplates/{instanceTemplate}',
+              'httpMethod' => 'DELETE',
+              'parameters' => array(
+                'project' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+                'instanceTemplate' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
+            ),'get' => array(
+              'path' => '{project}/global/instanceTemplates/{instanceTemplate}',
+              'httpMethod' => 'GET',
+              'parameters' => array(
+                'project' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+                'instanceTemplate' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
+            ),'insert' => array(
+              'path' => '{project}/global/instanceTemplates',
+              'httpMethod' => 'POST',
+              'parameters' => array(
+                'project' => array(
+                  'location' => 'path',
+                  'type' => 'string',
+                  'required' => true,
+                ),
+              ),
+            ),'list' => array(
+              'path' => '{project}/global/instanceTemplates',
               'httpMethod' => 'GET',
               'parameters' => array(
                 'project' => array(
@@ -3936,6 +4009,91 @@ class Google_Service_Compute_Images_Resource extends Google_Service_Resource
 }
 
 /**
+ * The "instanceTemplates" collection of methods.
+ * Typical usage is:
+ *  <code>
+ *   $computeService = new Google_Service_Compute(...);
+ *   $instanceTemplates = $computeService->instanceTemplates;
+ *  </code>
+ */
+class Google_Service_Compute_InstanceTemplates_Resource extends Google_Service_Resource
+{
+
+  /**
+   * Deletes the specified instance template resource. (instanceTemplates.delete)
+   *
+   * @param string $project
+   * Name of the project scoping this request.
+   * @param string $instanceTemplate
+   * Name of the instance template resource to delete.
+   * @param array $optParams Optional parameters.
+   * @return Google_Service_Compute_Operation
+   */
+  public function delete($project, $instanceTemplate, $optParams = array())
+  {
+    $params = array('project' => $project, 'instanceTemplate' => $instanceTemplate);
+    $params = array_merge($params, $optParams);
+    return $this->call('delete', array($params), "Google_Service_Compute_Operation");
+  }
+  /**
+   * Returns the specified instance template resource. (instanceTemplates.get)
+   *
+   * @param string $project
+   * Name of the project scoping this request.
+   * @param string $instanceTemplate
+   * Name of the instance template resource to return.
+   * @param array $optParams Optional parameters.
+   * @return Google_Service_Compute_InstanceTemplate
+   */
+  public function get($project, $instanceTemplate, $optParams = array())
+  {
+    $params = array('project' => $project, 'instanceTemplate' => $instanceTemplate);
+    $params = array_merge($params, $optParams);
+    return $this->call('get', array($params), "Google_Service_Compute_InstanceTemplate");
+  }
+  /**
+   * Creates an instance template resource in the specified project using the data
+   * included in the request. (instanceTemplates.insert)
+   *
+   * @param string $project
+   * Name of the project scoping this request.
+   * @param Google_InstanceTemplate $postBody
+   * @param array $optParams Optional parameters.
+   * @return Google_Service_Compute_Operation
+   */
+  public function insert($project, Google_Service_Compute_InstanceTemplate $postBody, $optParams = array())
+  {
+    $params = array('project' => $project, 'postBody' => $postBody);
+    $params = array_merge($params, $optParams);
+    return $this->call('insert', array($params), "Google_Service_Compute_Operation");
+  }
+  /**
+   * Retrieves the list of instance template resources contained within the
+   * specified project. (instanceTemplates.listInstanceTemplates)
+   *
+   * @param string $project
+   * Name of the project scoping this request.
+   * @param array $optParams Optional parameters.
+   *
+   * @opt_param string filter
+   * Optional. Filter expression for filtering listed resources.
+   * @opt_param string pageToken
+   * Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a
+    * previous list request.
+   * @opt_param string maxResults
+   * Optional. Maximum count of results to be returned. Maximum value is 500 and default value is
+    * 500.
+   * @return Google_Service_Compute_InstanceTemplateList
+   */
+  public function listInstanceTemplates($project, $optParams = array())
+  {
+    $params = array('project' => $project);
+    $params = array_merge($params, $optParams);
+    return $this->call('list', array($params), "Google_Service_Compute_InstanceTemplateList");
+  }
+}
+
+/**
  * The "instances" collection of methods.
  * Typical usage is:
  *  <code>
@@ -5517,6 +5675,8 @@ class Google_Service_Compute_Zones_Resource extends Google_Service_Resource
 
 class Google_Service_Compute_AccessConfig extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $kind;
   public $name;
   public $natIP;
@@ -5566,6 +5726,8 @@ class Google_Service_Compute_AccessConfig extends Google_Model
 class Google_Service_Compute_Address extends Google_Collection
 {
   protected $collection_key = 'users';
+  protected $internal_gapi_mappings = array(
+  );
   public $address;
   public $creationTimestamp;
   public $description;
@@ -5680,6 +5842,8 @@ class Google_Service_Compute_Address extends Google_Collection
 
 class Google_Service_Compute_AddressAggregatedList extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $id;
   protected $itemsType = 'Google_Service_Compute_AddressesScopedList';
   protected $itemsDataType = 'map';
@@ -5740,12 +5904,15 @@ class Google_Service_Compute_AddressAggregatedList extends Google_Model
 
 class Google_Service_Compute_AddressAggregatedListItems extends Google_Model
 {
-
+  protected $internal_gapi_mappings = array(
+  );
 }
 
 class Google_Service_Compute_AddressList extends Google_Collection
 {
   protected $collection_key = 'items';
+  protected $internal_gapi_mappings = array(
+  );
   public $id;
   protected $itemsType = 'Google_Service_Compute_Address';
   protected $itemsDataType = 'array';
@@ -5807,6 +5974,8 @@ class Google_Service_Compute_AddressList extends Google_Collection
 class Google_Service_Compute_AddressesScopedList extends Google_Collection
 {
   protected $collection_key = 'addresses';
+  protected $internal_gapi_mappings = array(
+  );
   protected $addressesType = 'Google_Service_Compute_Address';
   protected $addressesDataType = 'array';
   protected $warningType = 'Google_Service_Compute_AddressesScopedListWarning';
@@ -5836,6 +6005,8 @@ class Google_Service_Compute_AddressesScopedList extends Google_Collection
 class Google_Service_Compute_AddressesScopedListWarning extends Google_Collection
 {
   protected $collection_key = 'data';
+  protected $internal_gapi_mappings = array(
+  );
   public $code;
   protected $dataType = 'Google_Service_Compute_AddressesScopedListWarningData';
   protected $dataDataType = 'array';
@@ -5874,6 +6045,8 @@ class Google_Service_Compute_AddressesScopedListWarning extends Google_Collectio
 
 class Google_Service_Compute_AddressesScopedListWarningData extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $key;
   public $value;
 
@@ -5901,6 +6074,8 @@ class Google_Service_Compute_AddressesScopedListWarningData extends Google_Model
 class Google_Service_Compute_AttachedDisk extends Google_Collection
 {
   protected $collection_key = 'licenses';
+  protected $internal_gapi_mappings = array(
+  );
   public $autoDelete;
   public $boot;
   public $deviceName;
@@ -6016,6 +6191,8 @@ class Google_Service_Compute_AttachedDisk extends Google_Collection
 
 class Google_Service_Compute_AttachedDiskInitializeParams extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $diskName;
   public $diskSizeGb;
   public $diskType;
@@ -6064,6 +6241,8 @@ class Google_Service_Compute_AttachedDiskInitializeParams extends Google_Model
 
 class Google_Service_Compute_Backend extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $balancingMode;
   public $capacityScaler;
   public $description;
@@ -6146,6 +6325,8 @@ class Google_Service_Compute_Backend extends Google_Model
 class Google_Service_Compute_BackendService extends Google_Collection
 {
   protected $collection_key = 'healthChecks';
+  protected $internal_gapi_mappings = array(
+  );
   protected $backendsType = 'Google_Service_Compute_Backend';
   protected $backendsDataType = 'array';
   public $creationTimestamp;
@@ -6295,6 +6476,8 @@ class Google_Service_Compute_BackendService extends Google_Collection
 class Google_Service_Compute_BackendServiceGroupHealth extends Google_Collection
 {
   protected $collection_key = 'healthStatus';
+  protected $internal_gapi_mappings = array(
+  );
   protected $healthStatusType = 'Google_Service_Compute_HealthStatus';
   protected $healthStatusDataType = 'array';
   public $kind;
@@ -6323,6 +6506,8 @@ class Google_Service_Compute_BackendServiceGroupHealth extends Google_Collection
 class Google_Service_Compute_BackendServiceList extends Google_Collection
 {
   protected $collection_key = 'items';
+  protected $internal_gapi_mappings = array(
+  );
   public $id;
   protected $itemsType = 'Google_Service_Compute_BackendService';
   protected $itemsDataType = 'array';
@@ -6383,6 +6568,8 @@ class Google_Service_Compute_BackendServiceList extends Google_Collection
 
 class Google_Service_Compute_DeprecationStatus extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $deleted;
   public $deprecated;
   public $obsolete;
@@ -6443,6 +6630,8 @@ class Google_Service_Compute_DeprecationStatus extends Google_Model
 class Google_Service_Compute_Disk extends Google_Collection
 {
   protected $collection_key = 'licenses';
+  protected $internal_gapi_mappings = array(
+  );
   public $creationTimestamp;
   public $description;
   public $id;
@@ -6623,6 +6812,8 @@ class Google_Service_Compute_Disk extends Google_Collection
 
 class Google_Service_Compute_DiskAggregatedList extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $id;
   protected $itemsType = 'Google_Service_Compute_DisksScopedList';
   protected $itemsDataType = 'map';
@@ -6683,12 +6874,15 @@ class Google_Service_Compute_DiskAggregatedList extends Google_Model
 
 class Google_Service_Compute_DiskAggregatedListItems extends Google_Model
 {
-
+  protected $internal_gapi_mappings = array(
+  );
 }
 
 class Google_Service_Compute_DiskList extends Google_Collection
 {
   protected $collection_key = 'items';
+  protected $internal_gapi_mappings = array(
+  );
   public $id;
   protected $itemsType = 'Google_Service_Compute_Disk';
   protected $itemsDataType = 'array';
@@ -6749,6 +6943,8 @@ class Google_Service_Compute_DiskList extends Google_Collection
 
 class Google_Service_Compute_DiskType extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $creationTimestamp;
   public $defaultDiskSizeGb;
   protected $deprecatedType = 'Google_Service_Compute_DeprecationStatus';
@@ -6864,6 +7060,8 @@ class Google_Service_Compute_DiskType extends Google_Model
 
 class Google_Service_Compute_DiskTypeAggregatedList extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $id;
   protected $itemsType = 'Google_Service_Compute_DiskTypesScopedList';
   protected $itemsDataType = 'map';
@@ -6924,12 +7122,15 @@ class Google_Service_Compute_DiskTypeAggregatedList extends Google_Model
 
 class Google_Service_Compute_DiskTypeAggregatedListItems extends Google_Model
 {
-
+  protected $internal_gapi_mappings = array(
+  );
 }
 
 class Google_Service_Compute_DiskTypeList extends Google_Collection
 {
   protected $collection_key = 'items';
+  protected $internal_gapi_mappings = array(
+  );
   public $id;
   protected $itemsType = 'Google_Service_Compute_DiskType';
   protected $itemsDataType = 'array';
@@ -6991,6 +7192,8 @@ class Google_Service_Compute_DiskTypeList extends Google_Collection
 class Google_Service_Compute_DiskTypesScopedList extends Google_Collection
 {
   protected $collection_key = 'diskTypes';
+  protected $internal_gapi_mappings = array(
+  );
   protected $diskTypesType = 'Google_Service_Compute_DiskType';
   protected $diskTypesDataType = 'array';
   protected $warningType = 'Google_Service_Compute_DiskTypesScopedListWarning';
@@ -7020,6 +7223,8 @@ class Google_Service_Compute_DiskTypesScopedList extends Google_Collection
 class Google_Service_Compute_DiskTypesScopedListWarning extends Google_Collection
 {
   protected $collection_key = 'data';
+  protected $internal_gapi_mappings = array(
+  );
   public $code;
   protected $dataType = 'Google_Service_Compute_DiskTypesScopedListWarningData';
   protected $dataDataType = 'array';
@@ -7058,6 +7263,8 @@ class Google_Service_Compute_DiskTypesScopedListWarning extends Google_Collectio
 
 class Google_Service_Compute_DiskTypesScopedListWarningData extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $key;
   public $value;
 
@@ -7085,6 +7292,8 @@ class Google_Service_Compute_DiskTypesScopedListWarningData extends Google_Model
 class Google_Service_Compute_DisksScopedList extends Google_Collection
 {
   protected $collection_key = 'disks';
+  protected $internal_gapi_mappings = array(
+  );
   protected $disksType = 'Google_Service_Compute_Disk';
   protected $disksDataType = 'array';
   protected $warningType = 'Google_Service_Compute_DisksScopedListWarning';
@@ -7114,6 +7323,8 @@ class Google_Service_Compute_DisksScopedList extends Google_Collection
 class Google_Service_Compute_DisksScopedListWarning extends Google_Collection
 {
   protected $collection_key = 'data';
+  protected $internal_gapi_mappings = array(
+  );
   public $code;
   protected $dataType = 'Google_Service_Compute_DisksScopedListWarningData';
   protected $dataDataType = 'array';
@@ -7152,6 +7363,8 @@ class Google_Service_Compute_DisksScopedListWarning extends Google_Collection
 
 class Google_Service_Compute_DisksScopedListWarningData extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $key;
   public $value;
 
@@ -7179,6 +7392,8 @@ class Google_Service_Compute_DisksScopedListWarningData extends Google_Model
 class Google_Service_Compute_Firewall extends Google_Collection
 {
   protected $collection_key = 'targetTags';
+  protected $internal_gapi_mappings = array(
+  );
   protected $allowedType = 'Google_Service_Compute_FirewallAllowed';
   protected $allowedDataType = 'array';
   public $creationTimestamp;
@@ -7306,6 +7521,9 @@ class Google_Service_Compute_Firewall extends Google_Collection
 class Google_Service_Compute_FirewallAllowed extends Google_Collection
 {
   protected $collection_key = 'ports';
+  protected $internal_gapi_mappings = array(
+        "iPProtocol" => "IPProtocol",
+  );
   public $iPProtocol;
   public $ports;
 
@@ -7333,6 +7551,8 @@ class Google_Service_Compute_FirewallAllowed extends Google_Collection
 class Google_Service_Compute_FirewallList extends Google_Collection
 {
   protected $collection_key = 'items';
+  protected $internal_gapi_mappings = array(
+  );
   public $id;
   protected $itemsType = 'Google_Service_Compute_Firewall';
   protected $itemsDataType = 'array';
@@ -7393,6 +7613,10 @@ class Google_Service_Compute_FirewallList extends Google_Collection
 
 class Google_Service_Compute_ForwardingRule extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+        "iPAddress" => "IPAddress",
+        "iPProtocol" => "IPProtocol",
+  );
   public $iPAddress;
   public $iPProtocol;
   public $creationTimestamp;
@@ -7518,6 +7742,8 @@ class Google_Service_Compute_ForwardingRule extends Google_Model
 
 class Google_Service_Compute_ForwardingRuleAggregatedList extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $id;
   protected $itemsType = 'Google_Service_Compute_ForwardingRulesScopedList';
   protected $itemsDataType = 'map';
@@ -7578,12 +7804,15 @@ class Google_Service_Compute_ForwardingRuleAggregatedList extends Google_Model
 
 class Google_Service_Compute_ForwardingRuleAggregatedListItems extends Google_Model
 {
-
+  protected $internal_gapi_mappings = array(
+  );
 }
 
 class Google_Service_Compute_ForwardingRuleList extends Google_Collection
 {
   protected $collection_key = 'items';
+  protected $internal_gapi_mappings = array(
+  );
   public $id;
   protected $itemsType = 'Google_Service_Compute_ForwardingRule';
   protected $itemsDataType = 'array';
@@ -7645,6 +7874,8 @@ class Google_Service_Compute_ForwardingRuleList extends Google_Collection
 class Google_Service_Compute_ForwardingRulesScopedList extends Google_Collection
 {
   protected $collection_key = 'forwardingRules';
+  protected $internal_gapi_mappings = array(
+  );
   protected $forwardingRulesType = 'Google_Service_Compute_ForwardingRule';
   protected $forwardingRulesDataType = 'array';
   protected $warningType = 'Google_Service_Compute_ForwardingRulesScopedListWarning';
@@ -7674,6 +7905,8 @@ class Google_Service_Compute_ForwardingRulesScopedList extends Google_Collection
 class Google_Service_Compute_ForwardingRulesScopedListWarning extends Google_Collection
 {
   protected $collection_key = 'data';
+  protected $internal_gapi_mappings = array(
+  );
   public $code;
   protected $dataType = 'Google_Service_Compute_ForwardingRulesScopedListWarningData';
   protected $dataDataType = 'array';
@@ -7712,6 +7945,8 @@ class Google_Service_Compute_ForwardingRulesScopedListWarning extends Google_Col
 
 class Google_Service_Compute_ForwardingRulesScopedListWarningData extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $key;
   public $value;
 
@@ -7738,6 +7973,8 @@ class Google_Service_Compute_ForwardingRulesScopedListWarningData extends Google
 
 class Google_Service_Compute_HealthCheckReference extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $healthCheck;
 
   public function setHealthCheck($healthCheck)
@@ -7753,6 +7990,8 @@ class Google_Service_Compute_HealthCheckReference extends Google_Model
 
 class Google_Service_Compute_HealthStatus extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $healthState;
   public $instance;
   public $ipAddress;
@@ -7802,6 +8041,8 @@ class Google_Service_Compute_HealthStatus extends Google_Model
 class Google_Service_Compute_HostRule extends Google_Collection
 {
   protected $collection_key = 'hosts';
+  protected $internal_gapi_mappings = array(
+  );
   public $description;
   public $hosts;
   public $pathMatcher;
@@ -7839,6 +8080,8 @@ class Google_Service_Compute_HostRule extends Google_Collection
 
 class Google_Service_Compute_HttpHealthCheck extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $checkIntervalSec;
   public $creationTimestamp;
   public $description;
@@ -7987,6 +8230,8 @@ class Google_Service_Compute_HttpHealthCheck extends Google_Model
 class Google_Service_Compute_HttpHealthCheckList extends Google_Collection
 {
   protected $collection_key = 'items';
+  protected $internal_gapi_mappings = array(
+  );
   public $id;
   protected $itemsType = 'Google_Service_Compute_HttpHealthCheck';
   protected $itemsDataType = 'array';
@@ -8048,6 +8293,8 @@ class Google_Service_Compute_HttpHealthCheckList extends Google_Collection
 class Google_Service_Compute_Image extends Google_Collection
 {
   protected $collection_key = 'licenses';
+  protected $internal_gapi_mappings = array(
+  );
   public $archiveSizeBytes;
   public $creationTimestamp;
   protected $deprecatedType = 'Google_Service_Compute_DeprecationStatus';
@@ -8220,6 +8467,8 @@ class Google_Service_Compute_Image extends Google_Collection
 class Google_Service_Compute_ImageList extends Google_Collection
 {
   protected $collection_key = 'items';
+  protected $internal_gapi_mappings = array(
+  );
   public $id;
   protected $itemsType = 'Google_Service_Compute_Image';
   protected $itemsDataType = 'array';
@@ -8280,6 +8529,8 @@ class Google_Service_Compute_ImageList extends Google_Collection
 
 class Google_Service_Compute_ImageRawDisk extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $containerType;
   public $sha1Checksum;
   public $source;
@@ -8318,6 +8569,8 @@ class Google_Service_Compute_ImageRawDisk extends Google_Model
 class Google_Service_Compute_Instance extends Google_Collection
 {
   protected $collection_key = 'serviceAccounts';
+  protected $internal_gapi_mappings = array(
+  );
   public $canIpForward;
   public $creationTimestamp;
   public $description;
@@ -8515,6 +8768,8 @@ class Google_Service_Compute_Instance extends Google_Collection
 
 class Google_Service_Compute_InstanceAggregatedList extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $id;
   protected $itemsType = 'Google_Service_Compute_InstancesScopedList';
   protected $itemsDataType = 'map';
@@ -8575,12 +8830,15 @@ class Google_Service_Compute_InstanceAggregatedList extends Google_Model
 
 class Google_Service_Compute_InstanceAggregatedListItems extends Google_Model
 {
-
+  protected $internal_gapi_mappings = array(
+  );
 }
 
 class Google_Service_Compute_InstanceList extends Google_Collection
 {
   protected $collection_key = 'items';
+  protected $internal_gapi_mappings = array(
+  );
   public $id;
   protected $itemsType = 'Google_Service_Compute_Instance';
   protected $itemsDataType = 'array';
@@ -8639,8 +8897,122 @@ class Google_Service_Compute_InstanceList extends Google_Collection
   }
 }
 
+class Google_Service_Compute_InstanceProperties extends Google_Collection
+{
+  protected $collection_key = 'serviceAccounts';
+  protected $internal_gapi_mappings = array(
+  );
+  public $canIpForward;
+  public $description;
+  protected $disksType = 'Google_Service_Compute_AttachedDisk';
+  protected $disksDataType = 'array';
+  public $machineType;
+  protected $metadataType = 'Google_Service_Compute_Metadata';
+  protected $metadataDataType = '';
+  protected $networkInterfacesType = 'Google_Service_Compute_NetworkInterface';
+  protected $networkInterfacesDataType = 'array';
+  protected $schedulingType = 'Google_Service_Compute_Scheduling';
+  protected $schedulingDataType = '';
+  protected $serviceAccountsType = 'Google_Service_Compute_ServiceAccount';
+  protected $serviceAccountsDataType = 'array';
+  protected $tagsType = 'Google_Service_Compute_Tags';
+  protected $tagsDataType = '';
+
+  public function setCanIpForward($canIpForward)
+  {
+    $this->canIpForward = $canIpForward;
+  }
+
+  public function getCanIpForward()
+  {
+    return $this->canIpForward;
+  }
+
+  public function setDescription($description)
+  {
+    $this->description = $description;
+  }
+
+  public function getDescription()
+  {
+    return $this->description;
+  }
+
+  public function setDisks($disks)
+  {
+    $this->disks = $disks;
+  }
+
+  public function getDisks()
+  {
+    return $this->disks;
+  }
+
+  public function setMachineType($machineType)
+  {
+    $this->machineType = $machineType;
+  }
+
+  public function getMachineType()
+  {
+    return $this->machineType;
+  }
+
+  public function setMetadata(Google_Service_Compute_Metadata $metadata)
+  {
+    $this->metadata = $metadata;
+  }
+
+  public function getMetadata()
+  {
+    return $this->metadata;
+  }
+
+  public function setNetworkInterfaces($networkInterfaces)
+  {
+    $this->networkInterfaces = $networkInterfaces;
+  }
+
+  public function getNetworkInterfaces()
+  {
+    return $this->networkInterfaces;
+  }
+
+  public function setScheduling(Google_Service_Compute_Scheduling $scheduling)
+  {
+    $this->scheduling = $scheduling;
+  }
+
+  public function getScheduling()
+  {
+    return $this->scheduling;
+  }
+
+  public function setServiceAccounts($serviceAccounts)
+  {
+    $this->serviceAccounts = $serviceAccounts;
+  }
+
+  public function getServiceAccounts()
+  {
+    return $this->serviceAccounts;
+  }
+
+  public function setTags(Google_Service_Compute_Tags $tags)
+  {
+    $this->tags = $tags;
+  }
+
+  public function getTags()
+  {
+    return $this->tags;
+  }
+}
+
 class Google_Service_Compute_InstanceReference extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $instance;
 
   public function setInstance($instance)
@@ -8654,9 +9026,158 @@ class Google_Service_Compute_InstanceReference extends Google_Model
   }
 }
 
+class Google_Service_Compute_InstanceTemplate extends Google_Model
+{
+  protected $internal_gapi_mappings = array(
+  );
+  public $creationTimestamp;
+  public $description;
+  public $id;
+  public $kind;
+  public $name;
+  protected $propertiesType = 'Google_Service_Compute_InstanceProperties';
+  protected $propertiesDataType = '';
+  public $selfLink;
+
+  public function setCreationTimestamp($creationTimestamp)
+  {
+    $this->creationTimestamp = $creationTimestamp;
+  }
+
+  public function getCreationTimestamp()
+  {
+    return $this->creationTimestamp;
+  }
+
+  public function setDescription($description)
+  {
+    $this->description = $description;
+  }
+
+  public function getDescription()
+  {
+    return $this->description;
+  }
+
+  public function setId($id)
+  {
+    $this->id = $id;
+  }
+
+  public function getId()
+  {
+    return $this->id;
+  }
+
+  public function setKind($kind)
+  {
+    $this->kind = $kind;
+  }
+
+  public function getKind()
+  {
+    return $this->kind;
+  }
+
+  public function setName($name)
+  {
+    $this->name = $name;
+  }
+
+  public function getName()
+  {
+    return $this->name;
+  }
+
+  public function setProperties(Google_Service_Compute_InstanceProperties $properties)
+  {
+    $this->properties = $properties;
+  }
+
+  public function getProperties()
+  {
+    return $this->properties;
+  }
+
+  public function setSelfLink($selfLink)
+  {
+    $this->selfLink = $selfLink;
+  }
+
+  public function getSelfLink()
+  {
+    return $this->selfLink;
+  }
+}
+
+class Google_Service_Compute_InstanceTemplateList extends Google_Collection
+{
+  protected $collection_key = 'items';
+  protected $internal_gapi_mappings = array(
+  );
+  public $id;
+  protected $itemsType = 'Google_Service_Compute_InstanceTemplate';
+  protected $itemsDataType = 'array';
+  public $kind;
+  public $nextPageToken;
+  public $selfLink;
+
+  public function setId($id)
+  {
+    $this->id = $id;
+  }
+
+  public function getId()
+  {
+    return $this->id;
+  }
+
+  public function setItems($items)
+  {
+    $this->items = $items;
+  }
+
+  public function getItems()
+  {
+    return $this->items;
+  }
+
+  public function setKind($kind)
+  {
+    $this->kind = $kind;
+  }
+
+  public function getKind()
+  {
+    return $this->kind;
+  }
+
+  public function setNextPageToken($nextPageToken)
+  {
+    $this->nextPageToken = $nextPageToken;
+  }
+
+  public function getNextPageToken()
+  {
+    return $this->nextPageToken;
+  }
+
+  public function setSelfLink($selfLink)
+  {
+    $this->selfLink = $selfLink;
+  }
+
+  public function getSelfLink()
+  {
+    return $this->selfLink;
+  }
+}
+
 class Google_Service_Compute_InstancesScopedList extends Google_Collection
 {
   protected $collection_key = 'instances';
+  protected $internal_gapi_mappings = array(
+  );
   protected $instancesType = 'Google_Service_Compute_Instance';
   protected $instancesDataType = 'array';
   protected $warningType = 'Google_Service_Compute_InstancesScopedListWarning';
@@ -8686,6 +9207,8 @@ class Google_Service_Compute_InstancesScopedList extends Google_Collection
 class Google_Service_Compute_InstancesScopedListWarning extends Google_Collection
 {
   protected $collection_key = 'data';
+  protected $internal_gapi_mappings = array(
+  );
   public $code;
   protected $dataType = 'Google_Service_Compute_InstancesScopedListWarningData';
   protected $dataDataType = 'array';
@@ -8724,6 +9247,8 @@ class Google_Service_Compute_InstancesScopedListWarning extends Google_Collectio
 
 class Google_Service_Compute_InstancesScopedListWarningData extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $key;
   public $value;
 
@@ -8750,6 +9275,8 @@ class Google_Service_Compute_InstancesScopedListWarningData extends Google_Model
 
 class Google_Service_Compute_License extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $chargesUseFee;
   public $kind;
   public $name;
@@ -8799,6 +9326,8 @@ class Google_Service_Compute_License extends Google_Model
 class Google_Service_Compute_MachineType extends Google_Collection
 {
   protected $collection_key = 'scratchDisks';
+  protected $internal_gapi_mappings = array(
+  );
   public $creationTimestamp;
   protected $deprecatedType = 'Google_Service_Compute_DeprecationStatus';
   protected $deprecatedDataType = '';
@@ -8959,6 +9488,8 @@ class Google_Service_Compute_MachineType extends Google_Collection
 
 class Google_Service_Compute_MachineTypeAggregatedList extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $id;
   protected $itemsType = 'Google_Service_Compute_MachineTypesScopedList';
   protected $itemsDataType = 'map';
@@ -9019,12 +9550,15 @@ class Google_Service_Compute_MachineTypeAggregatedList extends Google_Model
 
 class Google_Service_Compute_MachineTypeAggregatedListItems extends Google_Model
 {
-
+  protected $internal_gapi_mappings = array(
+  );
 }
 
 class Google_Service_Compute_MachineTypeList extends Google_Collection
 {
   protected $collection_key = 'items';
+  protected $internal_gapi_mappings = array(
+  );
   public $id;
   protected $itemsType = 'Google_Service_Compute_MachineType';
   protected $itemsDataType = 'array';
@@ -9085,6 +9619,8 @@ class Google_Service_Compute_MachineTypeList extends Google_Collection
 
 class Google_Service_Compute_MachineTypeScratchDisks extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $diskGb;
 
   public function setDiskGb($diskGb)
@@ -9101,6 +9637,8 @@ class Google_Service_Compute_MachineTypeScratchDisks extends Google_Model
 class Google_Service_Compute_MachineTypesScopedList extends Google_Collection
 {
   protected $collection_key = 'machineTypes';
+  protected $internal_gapi_mappings = array(
+  );
   protected $machineTypesType = 'Google_Service_Compute_MachineType';
   protected $machineTypesDataType = 'array';
   protected $warningType = 'Google_Service_Compute_MachineTypesScopedListWarning';
@@ -9130,6 +9668,8 @@ class Google_Service_Compute_MachineTypesScopedList extends Google_Collection
 class Google_Service_Compute_MachineTypesScopedListWarning extends Google_Collection
 {
   protected $collection_key = 'data';
+  protected $internal_gapi_mappings = array(
+  );
   public $code;
   protected $dataType = 'Google_Service_Compute_MachineTypesScopedListWarningData';
   protected $dataDataType = 'array';
@@ -9168,6 +9708,8 @@ class Google_Service_Compute_MachineTypesScopedListWarning extends Google_Collec
 
 class Google_Service_Compute_MachineTypesScopedListWarningData extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $key;
   public $value;
 
@@ -9195,6 +9737,8 @@ class Google_Service_Compute_MachineTypesScopedListWarningData extends Google_Mo
 class Google_Service_Compute_Metadata extends Google_Collection
 {
   protected $collection_key = 'items';
+  protected $internal_gapi_mappings = array(
+  );
   public $fingerprint;
   protected $itemsType = 'Google_Service_Compute_MetadataItems';
   protected $itemsDataType = 'array';
@@ -9233,6 +9777,8 @@ class Google_Service_Compute_Metadata extends Google_Collection
 
 class Google_Service_Compute_MetadataItems extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $key;
   public $value;
 
@@ -9259,6 +9805,9 @@ class Google_Service_Compute_MetadataItems extends Google_Model
 
 class Google_Service_Compute_Network extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+        "iPv4Range" => "IPv4Range",
+  );
   public $iPv4Range;
   public $creationTimestamp;
   public $description;
@@ -9352,6 +9901,8 @@ class Google_Service_Compute_Network extends Google_Model
 class Google_Service_Compute_NetworkInterface extends Google_Collection
 {
   protected $collection_key = 'accessConfigs';
+  protected $internal_gapi_mappings = array(
+  );
   protected $accessConfigsType = 'Google_Service_Compute_AccessConfig';
   protected $accessConfigsDataType = 'array';
   public $name;
@@ -9402,6 +9953,8 @@ class Google_Service_Compute_NetworkInterface extends Google_Collection
 class Google_Service_Compute_NetworkList extends Google_Collection
 {
   protected $collection_key = 'items';
+  protected $internal_gapi_mappings = array(
+  );
   public $id;
   protected $itemsType = 'Google_Service_Compute_Network';
   protected $itemsDataType = 'array';
@@ -9463,6 +10016,8 @@ class Google_Service_Compute_NetworkList extends Google_Collection
 class Google_Service_Compute_Operation extends Google_Collection
 {
   protected $collection_key = 'warnings';
+  protected $internal_gapi_mappings = array(
+  );
   public $clientOperationId;
   public $creationTimestamp;
   public $endTime;
@@ -9711,6 +10266,8 @@ class Google_Service_Compute_Operation extends Google_Collection
 
 class Google_Service_Compute_OperationAggregatedList extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $id;
   protected $itemsType = 'Google_Service_Compute_OperationsScopedList';
   protected $itemsDataType = 'map';
@@ -9771,12 +10328,15 @@ class Google_Service_Compute_OperationAggregatedList extends Google_Model
 
 class Google_Service_Compute_OperationAggregatedListItems extends Google_Model
 {
-
+  protected $internal_gapi_mappings = array(
+  );
 }
 
 class Google_Service_Compute_OperationError extends Google_Collection
 {
   protected $collection_key = 'errors';
+  protected $internal_gapi_mappings = array(
+  );
   protected $errorsType = 'Google_Service_Compute_OperationErrorErrors';
   protected $errorsDataType = 'array';
 
@@ -9793,6 +10353,8 @@ class Google_Service_Compute_OperationError extends Google_Collection
 
 class Google_Service_Compute_OperationErrorErrors extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $code;
   public $location;
   public $message;
@@ -9831,6 +10393,8 @@ class Google_Service_Compute_OperationErrorErrors extends Google_Model
 class Google_Service_Compute_OperationList extends Google_Collection
 {
   protected $collection_key = 'items';
+  protected $internal_gapi_mappings = array(
+  );
   public $id;
   protected $itemsType = 'Google_Service_Compute_Operation';
   protected $itemsDataType = 'array';
@@ -9892,6 +10456,8 @@ class Google_Service_Compute_OperationList extends Google_Collection
 class Google_Service_Compute_OperationWarnings extends Google_Collection
 {
   protected $collection_key = 'data';
+  protected $internal_gapi_mappings = array(
+  );
   public $code;
   protected $dataType = 'Google_Service_Compute_OperationWarningsData';
   protected $dataDataType = 'array';
@@ -9930,6 +10496,8 @@ class Google_Service_Compute_OperationWarnings extends Google_Collection
 
 class Google_Service_Compute_OperationWarningsData extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $key;
   public $value;
 
@@ -9957,6 +10525,8 @@ class Google_Service_Compute_OperationWarningsData extends Google_Model
 class Google_Service_Compute_OperationsScopedList extends Google_Collection
 {
   protected $collection_key = 'operations';
+  protected $internal_gapi_mappings = array(
+  );
   protected $operationsType = 'Google_Service_Compute_Operation';
   protected $operationsDataType = 'array';
   protected $warningType = 'Google_Service_Compute_OperationsScopedListWarning';
@@ -9986,6 +10556,8 @@ class Google_Service_Compute_OperationsScopedList extends Google_Collection
 class Google_Service_Compute_OperationsScopedListWarning extends Google_Collection
 {
   protected $collection_key = 'data';
+  protected $internal_gapi_mappings = array(
+  );
   public $code;
   protected $dataType = 'Google_Service_Compute_OperationsScopedListWarningData';
   protected $dataDataType = 'array';
@@ -10024,6 +10596,8 @@ class Google_Service_Compute_OperationsScopedListWarning extends Google_Collecti
 
 class Google_Service_Compute_OperationsScopedListWarningData extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $key;
   public $value;
 
@@ -10051,6 +10625,8 @@ class Google_Service_Compute_OperationsScopedListWarningData extends Google_Mode
 class Google_Service_Compute_PathMatcher extends Google_Collection
 {
   protected $collection_key = 'pathRules';
+  protected $internal_gapi_mappings = array(
+  );
   public $defaultService;
   public $description;
   public $name;
@@ -10101,6 +10677,8 @@ class Google_Service_Compute_PathMatcher extends Google_Collection
 class Google_Service_Compute_PathRule extends Google_Collection
 {
   protected $collection_key = 'paths';
+  protected $internal_gapi_mappings = array(
+  );
   public $paths;
   public $service;
 
@@ -10128,6 +10706,8 @@ class Google_Service_Compute_PathRule extends Google_Collection
 class Google_Service_Compute_Project extends Google_Collection
 {
   protected $collection_key = 'quotas';
+  protected $internal_gapi_mappings = array(
+  );
   protected $commonInstanceMetadataType = 'Google_Service_Compute_Metadata';
   protected $commonInstanceMetadataDataType = '';
   public $creationTimestamp;
@@ -10234,6 +10814,8 @@ class Google_Service_Compute_Project extends Google_Collection
 
 class Google_Service_Compute_Quota extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $limit;
   public $metric;
   public $usage;
@@ -10272,6 +10854,8 @@ class Google_Service_Compute_Quota extends Google_Model
 class Google_Service_Compute_Region extends Google_Collection
 {
   protected $collection_key = 'zones';
+  protected $internal_gapi_mappings = array(
+  );
   public $creationTimestamp;
   protected $deprecatedType = 'Google_Service_Compute_DeprecationStatus';
   protected $deprecatedDataType = '';
@@ -10389,6 +10973,8 @@ class Google_Service_Compute_Region extends Google_Collection
 class Google_Service_Compute_RegionList extends Google_Collection
 {
   protected $collection_key = 'items';
+  protected $internal_gapi_mappings = array(
+  );
   public $id;
   protected $itemsType = 'Google_Service_Compute_Region';
   protected $itemsDataType = 'array';
@@ -10449,6 +11035,8 @@ class Google_Service_Compute_RegionList extends Google_Collection
 
 class Google_Service_Compute_ResourceGroupReference extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $group;
 
   public function setGroup($group)
@@ -10465,6 +11053,8 @@ class Google_Service_Compute_ResourceGroupReference extends Google_Model
 class Google_Service_Compute_Route extends Google_Collection
 {
   protected $collection_key = 'warnings';
+  protected $internal_gapi_mappings = array(
+  );
   public $creationTimestamp;
   public $description;
   public $destRange;
@@ -10636,6 +11226,8 @@ class Google_Service_Compute_Route extends Google_Collection
 class Google_Service_Compute_RouteList extends Google_Collection
 {
   protected $collection_key = 'items';
+  protected $internal_gapi_mappings = array(
+  );
   public $id;
   protected $itemsType = 'Google_Service_Compute_Route';
   protected $itemsDataType = 'array';
@@ -10697,6 +11289,8 @@ class Google_Service_Compute_RouteList extends Google_Collection
 class Google_Service_Compute_RouteWarnings extends Google_Collection
 {
   protected $collection_key = 'data';
+  protected $internal_gapi_mappings = array(
+  );
   public $code;
   protected $dataType = 'Google_Service_Compute_RouteWarningsData';
   protected $dataDataType = 'array';
@@ -10735,6 +11329,8 @@ class Google_Service_Compute_RouteWarnings extends Google_Collection
 
 class Google_Service_Compute_RouteWarningsData extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $key;
   public $value;
 
@@ -10761,6 +11357,8 @@ class Google_Service_Compute_RouteWarningsData extends Google_Model
 
 class Google_Service_Compute_Scheduling extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $automaticRestart;
   public $onHostMaintenance;
 
@@ -10787,6 +11385,8 @@ class Google_Service_Compute_Scheduling extends Google_Model
 
 class Google_Service_Compute_SerialPortOutput extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $contents;
   public $kind;
   public $selfLink;
@@ -10825,6 +11425,8 @@ class Google_Service_Compute_SerialPortOutput extends Google_Model
 class Google_Service_Compute_ServiceAccount extends Google_Collection
 {
   protected $collection_key = 'scopes';
+  protected $internal_gapi_mappings = array(
+  );
   public $email;
   public $scopes;
 
@@ -10852,6 +11454,8 @@ class Google_Service_Compute_ServiceAccount extends Google_Collection
 class Google_Service_Compute_Snapshot extends Google_Collection
 {
   protected $collection_key = 'licenses';
+  protected $internal_gapi_mappings = array(
+  );
   public $creationTimestamp;
   public $description;
   public $diskSizeGb;
@@ -11000,6 +11604,8 @@ class Google_Service_Compute_Snapshot extends Google_Collection
 class Google_Service_Compute_SnapshotList extends Google_Collection
 {
   protected $collection_key = 'items';
+  protected $internal_gapi_mappings = array(
+  );
   public $id;
   protected $itemsType = 'Google_Service_Compute_Snapshot';
   protected $itemsDataType = 'array';
@@ -11061,6 +11667,8 @@ class Google_Service_Compute_SnapshotList extends Google_Collection
 class Google_Service_Compute_Tags extends Google_Collection
 {
   protected $collection_key = 'items';
+  protected $internal_gapi_mappings = array(
+  );
   public $fingerprint;
   public $items;
 
@@ -11087,6 +11695,8 @@ class Google_Service_Compute_Tags extends Google_Collection
 
 class Google_Service_Compute_TargetHttpProxy extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $creationTimestamp;
   public $description;
   public $id;
@@ -11169,6 +11779,8 @@ class Google_Service_Compute_TargetHttpProxy extends Google_Model
 class Google_Service_Compute_TargetHttpProxyList extends Google_Collection
 {
   protected $collection_key = 'items';
+  protected $internal_gapi_mappings = array(
+  );
   public $id;
   protected $itemsType = 'Google_Service_Compute_TargetHttpProxy';
   protected $itemsDataType = 'array';
@@ -11229,6 +11841,8 @@ class Google_Service_Compute_TargetHttpProxyList extends Google_Collection
 
 class Google_Service_Compute_TargetInstance extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $creationTimestamp;
   public $description;
   public $id;
@@ -11332,6 +11946,8 @@ class Google_Service_Compute_TargetInstance extends Google_Model
 
 class Google_Service_Compute_TargetInstanceAggregatedList extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $id;
   protected $itemsType = 'Google_Service_Compute_TargetInstancesScopedList';
   protected $itemsDataType = 'map';
@@ -11392,12 +12008,15 @@ class Google_Service_Compute_TargetInstanceAggregatedList extends Google_Model
 
 class Google_Service_Compute_TargetInstanceAggregatedListItems extends Google_Model
 {
-
+  protected $internal_gapi_mappings = array(
+  );
 }
 
 class Google_Service_Compute_TargetInstanceList extends Google_Collection
 {
   protected $collection_key = 'items';
+  protected $internal_gapi_mappings = array(
+  );
   public $id;
   protected $itemsType = 'Google_Service_Compute_TargetInstance';
   protected $itemsDataType = 'array';
@@ -11459,6 +12078,8 @@ class Google_Service_Compute_TargetInstanceList extends Google_Collection
 class Google_Service_Compute_TargetInstancesScopedList extends Google_Collection
 {
   protected $collection_key = 'targetInstances';
+  protected $internal_gapi_mappings = array(
+  );
   protected $targetInstancesType = 'Google_Service_Compute_TargetInstance';
   protected $targetInstancesDataType = 'array';
   protected $warningType = 'Google_Service_Compute_TargetInstancesScopedListWarning';
@@ -11488,6 +12109,8 @@ class Google_Service_Compute_TargetInstancesScopedList extends Google_Collection
 class Google_Service_Compute_TargetInstancesScopedListWarning extends Google_Collection
 {
   protected $collection_key = 'data';
+  protected $internal_gapi_mappings = array(
+  );
   public $code;
   protected $dataType = 'Google_Service_Compute_TargetInstancesScopedListWarningData';
   protected $dataDataType = 'array';
@@ -11526,6 +12149,8 @@ class Google_Service_Compute_TargetInstancesScopedListWarning extends Google_Col
 
 class Google_Service_Compute_TargetInstancesScopedListWarningData extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $key;
   public $value;
 
@@ -11553,6 +12178,8 @@ class Google_Service_Compute_TargetInstancesScopedListWarningData extends Google
 class Google_Service_Compute_TargetPool extends Google_Collection
 {
   protected $collection_key = 'instances';
+  protected $internal_gapi_mappings = array(
+  );
   public $backupPool;
   public $creationTimestamp;
   public $description;
@@ -11689,6 +12316,8 @@ class Google_Service_Compute_TargetPool extends Google_Collection
 
 class Google_Service_Compute_TargetPoolAggregatedList extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $id;
   protected $itemsType = 'Google_Service_Compute_TargetPoolsScopedList';
   protected $itemsDataType = 'map';
@@ -11749,12 +12378,15 @@ class Google_Service_Compute_TargetPoolAggregatedList extends Google_Model
 
 class Google_Service_Compute_TargetPoolAggregatedListItems extends Google_Model
 {
-
+  protected $internal_gapi_mappings = array(
+  );
 }
 
 class Google_Service_Compute_TargetPoolInstanceHealth extends Google_Collection
 {
   protected $collection_key = 'healthStatus';
+  protected $internal_gapi_mappings = array(
+  );
   protected $healthStatusType = 'Google_Service_Compute_HealthStatus';
   protected $healthStatusDataType = 'array';
   public $kind;
@@ -11783,6 +12415,8 @@ class Google_Service_Compute_TargetPoolInstanceHealth extends Google_Collection
 class Google_Service_Compute_TargetPoolList extends Google_Collection
 {
   protected $collection_key = 'items';
+  protected $internal_gapi_mappings = array(
+  );
   public $id;
   protected $itemsType = 'Google_Service_Compute_TargetPool';
   protected $itemsDataType = 'array';
@@ -11844,6 +12478,8 @@ class Google_Service_Compute_TargetPoolList extends Google_Collection
 class Google_Service_Compute_TargetPoolsAddHealthCheckRequest extends Google_Collection
 {
   protected $collection_key = 'healthChecks';
+  protected $internal_gapi_mappings = array(
+  );
   protected $healthChecksType = 'Google_Service_Compute_HealthCheckReference';
   protected $healthChecksDataType = 'array';
 
@@ -11861,6 +12497,8 @@ class Google_Service_Compute_TargetPoolsAddHealthCheckRequest extends Google_Col
 class Google_Service_Compute_TargetPoolsAddInstanceRequest extends Google_Collection
 {
   protected $collection_key = 'instances';
+  protected $internal_gapi_mappings = array(
+  );
   protected $instancesType = 'Google_Service_Compute_InstanceReference';
   protected $instancesDataType = 'array';
 
@@ -11878,6 +12516,8 @@ class Google_Service_Compute_TargetPoolsAddInstanceRequest extends Google_Collec
 class Google_Service_Compute_TargetPoolsRemoveHealthCheckRequest extends Google_Collection
 {
   protected $collection_key = 'healthChecks';
+  protected $internal_gapi_mappings = array(
+  );
   protected $healthChecksType = 'Google_Service_Compute_HealthCheckReference';
   protected $healthChecksDataType = 'array';
 
@@ -11895,6 +12535,8 @@ class Google_Service_Compute_TargetPoolsRemoveHealthCheckRequest extends Google_
 class Google_Service_Compute_TargetPoolsRemoveInstanceRequest extends Google_Collection
 {
   protected $collection_key = 'instances';
+  protected $internal_gapi_mappings = array(
+  );
   protected $instancesType = 'Google_Service_Compute_InstanceReference';
   protected $instancesDataType = 'array';
 
@@ -11912,6 +12554,8 @@ class Google_Service_Compute_TargetPoolsRemoveInstanceRequest extends Google_Col
 class Google_Service_Compute_TargetPoolsScopedList extends Google_Collection
 {
   protected $collection_key = 'targetPools';
+  protected $internal_gapi_mappings = array(
+  );
   protected $targetPoolsType = 'Google_Service_Compute_TargetPool';
   protected $targetPoolsDataType = 'array';
   protected $warningType = 'Google_Service_Compute_TargetPoolsScopedListWarning';
@@ -11941,6 +12585,8 @@ class Google_Service_Compute_TargetPoolsScopedList extends Google_Collection
 class Google_Service_Compute_TargetPoolsScopedListWarning extends Google_Collection
 {
   protected $collection_key = 'data';
+  protected $internal_gapi_mappings = array(
+  );
   public $code;
   protected $dataType = 'Google_Service_Compute_TargetPoolsScopedListWarningData';
   protected $dataDataType = 'array';
@@ -11979,6 +12625,8 @@ class Google_Service_Compute_TargetPoolsScopedListWarning extends Google_Collect
 
 class Google_Service_Compute_TargetPoolsScopedListWarningData extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $key;
   public $value;
 
@@ -12005,6 +12653,8 @@ class Google_Service_Compute_TargetPoolsScopedListWarningData extends Google_Mod
 
 class Google_Service_Compute_TargetReference extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $target;
 
   public function setTarget($target)
@@ -12020,6 +12670,8 @@ class Google_Service_Compute_TargetReference extends Google_Model
 
 class Google_Service_Compute_TestFailure extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $actualService;
   public $expectedService;
   public $host;
@@ -12069,6 +12721,8 @@ class Google_Service_Compute_TestFailure extends Google_Model
 class Google_Service_Compute_UrlMap extends Google_Collection
 {
   protected $collection_key = 'tests';
+  protected $internal_gapi_mappings = array(
+  );
   public $creationTimestamp;
   public $defaultService;
   public $description;
@@ -12198,6 +12852,8 @@ class Google_Service_Compute_UrlMap extends Google_Collection
 class Google_Service_Compute_UrlMapList extends Google_Collection
 {
   protected $collection_key = 'items';
+  protected $internal_gapi_mappings = array(
+  );
   public $id;
   protected $itemsType = 'Google_Service_Compute_UrlMap';
   protected $itemsDataType = 'array';
@@ -12258,6 +12914,8 @@ class Google_Service_Compute_UrlMapList extends Google_Collection
 
 class Google_Service_Compute_UrlMapReference extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $urlMap;
 
   public function setUrlMap($urlMap)
@@ -12273,6 +12931,8 @@ class Google_Service_Compute_UrlMapReference extends Google_Model
 
 class Google_Service_Compute_UrlMapTest extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $description;
   public $host;
   public $path;
@@ -12322,6 +12982,8 @@ class Google_Service_Compute_UrlMapTest extends Google_Model
 class Google_Service_Compute_UrlMapValidationResult extends Google_Collection
 {
   protected $collection_key = 'testFailures';
+  protected $internal_gapi_mappings = array(
+  );
   public $loadErrors;
   public $loadSucceeded;
   protected $testFailuresType = 'Google_Service_Compute_TestFailure';
@@ -12371,6 +13033,8 @@ class Google_Service_Compute_UrlMapValidationResult extends Google_Collection
 
 class Google_Service_Compute_UrlMapsValidateRequest extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   protected $resourceType = 'Google_Service_Compute_UrlMap';
   protected $resourceDataType = '';
 
@@ -12387,6 +13051,8 @@ class Google_Service_Compute_UrlMapsValidateRequest extends Google_Model
 
 class Google_Service_Compute_UrlMapsValidateResponse extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   protected $resultType = 'Google_Service_Compute_UrlMapValidationResult';
   protected $resultDataType = '';
 
@@ -12403,6 +13069,8 @@ class Google_Service_Compute_UrlMapsValidateResponse extends Google_Model
 
 class Google_Service_Compute_UsageExportLocation extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $bucketName;
   public $reportNamePrefix;
 
@@ -12430,6 +13098,8 @@ class Google_Service_Compute_UsageExportLocation extends Google_Model
 class Google_Service_Compute_Zone extends Google_Collection
 {
   protected $collection_key = 'maintenanceWindows';
+  protected $internal_gapi_mappings = array(
+  );
   public $creationTimestamp;
   protected $deprecatedType = 'Google_Service_Compute_DeprecationStatus';
   protected $deprecatedDataType = '';
@@ -12547,6 +13217,8 @@ class Google_Service_Compute_Zone extends Google_Collection
 class Google_Service_Compute_ZoneList extends Google_Collection
 {
   protected $collection_key = 'items';
+  protected $internal_gapi_mappings = array(
+  );
   public $id;
   protected $itemsType = 'Google_Service_Compute_Zone';
   protected $itemsDataType = 'array';
@@ -12607,6 +13279,8 @@ class Google_Service_Compute_ZoneList extends Google_Collection
 
 class Google_Service_Compute_ZoneMaintenanceWindows extends Google_Model
 {
+  protected $internal_gapi_mappings = array(
+  );
   public $beginTime;
   public $description;
   public $endTime;
